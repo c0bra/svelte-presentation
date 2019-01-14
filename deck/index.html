@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <title>Svelte Lunch &amp; Learn</title>
+
+    <meta name="description" content="Svelte Lunch &amp; Learn" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css" />
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/simple.css" id="theme" />
+
+    <link rel="stylesheet" href="assets/markdeck/styles/zenburn.css" />
+
+        <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
+    <link rel="stylesheet" href="assets/css/slides.css" />
+
+    <script>
+        window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
+        if (window.pdf_render) {
+            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
+        }
+    </script>
+
+    <link href="assets/css/rerendering.css" rel="stylesheet"></link>
+
+
+</head>
+<body>
+
+
+    <div class="rerendering-message"><h1>R E R E N D E R I N G</h1></div>
+    <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">powered by markdeck</a></div>
+
+    <div class="reveal">
+        <div class="slides">
+
+<section id="section" class="level1">
+<h1><img src="assets/svelte-logo.png" /></h1>
+<p>A magically disappearing framework</p>
+</section>
+<section id="a-compiler-not-a-runtime" class="level1">
+<h1>A compiler, not a runtime</h1>
+<pre class="html"><code>&lt;!-- App.html --&gt;
+&lt;h1&gt;Hello {name}!&lt;/h1&gt;</code></pre>
+<div class="line-block"><br />
+</div>
+<p><small>Turns into Vanilla JS in the browser</small></p>
+</section>
+<section id="runtimes-live-in-your-browser" class="level1">
+<h1>Runtimes live in your browser</h1>
+<ul>
+<li>Angular, React, Vue</li>
+<li>Interpret your code at runtime</li>
+</ul>
+</section>
+<section id="compilers-live-in-your-dev-env" class="level1">
+<h1>Compilers live in your dev env</h1>
+<ul>
+<li>Turn your apps and components into plain JS</li>
+<li>Work as part of your build flow (webpack, rollup, parcel)</li>
+</ul>
+</section>
+<section id="why-compile" class="level1">
+<h1>Why compile?</h1>
+</section>
+<section id="runtimes-are-big" class="level1">
+<h1>Runtimes are big</h1>
+<blockquote>
+<p>Svelte’s Todo MVC weighs 3.6kb zipped. For comparison, React plus ReactDOM without any app code weighs about 45kb zipped</p>
+</blockquote>
+</section>
+<section id="runtimes-provide-unnecessary-code" class="level1">
+<h1>Runtimes provide unnecessary code</h1>
+<ul>
+<li>Difficult to tree-shake all of React</li>
+<li>Better to remove dead code or just don’t generate it?</li>
+</ul>
+</section>
+<section id="runtimes-are-slow" class="level1">
+<h1>Runtimes are slow</h1>
+<p><img src="assets/svelte-benchmarks2.jpg" /></p>
+</section>
+<section id="runtimes-lock-you-in" class="level1">
+<h1>Runtimes lock you in</h1>
+<p>No runtime means code can be re-used in any framework, or no framework.</p>
+<div class="line-block"><br />
+</div>
+<p>Re-using Vue in React or vice-versa requires jumping through hoops. Don’t even think about Angular.</p>
+</section>
+<section id="how-do-you-write-svelte" class="level1">
+<h1>How do you write Svelte?</h1>
+<p>Component file syntax familiar to Vue users</p>
+<pre class="html"><code>&lt;!-- Greeting.html --&gt;
+&lt;h1&gt;Hi, {name}, I&#39;m your component!&lt;/h1&gt;
+
+&lt;script&gt;
+export let name = &#39;Bob&#39;;
+&lt;/script&gt;
+
+&lt;style&gt;
+h1 {
+  color: blue;
+}
+&lt;/style&gt;</code></pre>
+</section>
+<section id="how-do-you-use-a-svelte-component" class="level1">
+<h1>How do you use a Svelte component&gt;?</h1>
+<pre class="js"><code>const greet = new Greeting({
+  target: document.body,
+  props: {
+    name: &#39;Fred&#39;,
+  },
+});
+
+greet.set({ name: &#39;Jimmy&#39; });</code></pre>
+</section>
+
+        </div>
+    </div>
+
+    <script src="assets/3rdparty/jquery.js"></script>
+
+    <script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
+    <script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
+
+    <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: 'true',
+            controlsTutorial: '',
+            controlsLayout: 'bottom-right',
+            controlsBackArrows: 'faded',
+            progress: 'true',
+            defaultTiming: '120',
+            slideNumber: 'true',
+            history: 'true',
+            keyboard: 'true',
+            overview: 'true',
+            center: 'true',
+            touch: 'true',
+            loop: '',
+            rtl: '',
+            shuffle: '',
+            fragments: 'true',
+            embedded: '',
+            help: 'true',
+            showNotes: '',
+            autoPlayMedia: 'null',
+
+            autoSlide: (window.pdf_render) ? 0 : 0,
+
+            autoSlideStoppable: 'true',
+            autoSlideMethod: 'Reveal.navigateNext',
+            mouseWheel: '',
+            hideAddressBar: 'true',
+            previewLinks: '',
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+
+            theme: 'simple',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+    </script>
+
+    
+    <script src="assets/markdeck/revealjs-helper.js"></script>
+    <script>
+        flushleft(".slides .flushleft");
+    </script>
+
+
+</body>
+</html>
