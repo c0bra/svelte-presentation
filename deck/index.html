@@ -39,7 +39,8 @@
         <div class="slides">
 
 <section id="section" class="level1">
-<h1><img src="assets/svelte-logo.png" /></h1>
+<h1></h1>
+<p><img src="assets/svelte.svg" alt="logo" width="200"/> (v3)</p>
 <p>A magically disappearing framework</p>
 </section>
 <section id="a-compiler-not-a-runtime" class="level1">
@@ -93,22 +94,22 @@
 </section>
 <section id="how-do-you-write-svelte" class="level1">
 <h1>How do you write Svelte?</h1>
-<p>Component file syntax familiar to Vue users</p>
+<p>Components are done in a single file, like Vue or React.</p>
 <pre class="html"><code>&lt;!-- Greeting.html --&gt;
 &lt;h1&gt;Hi, {name}, I&#39;m your component!&lt;/h1&gt;
 
 &lt;script&gt;
-export let name = &#39;Bob&#39;;
+  export let name = &#39;Bob&#39;;
 &lt;/script&gt;
 
 &lt;style&gt;
-h1 {
-  color: blue;
-}
+  h1 {
+    color: blue;
+  }
 &lt;/style&gt;</code></pre>
 </section>
-<section id="how-do-you-use-a-svelte-component" class="level1">
-<h1>How do you use a Svelte component&gt;?</h1>
+<section id="how-do-you-use-svelte-components" class="level1">
+<h1>How do you use Svelte components?</h1>
 <pre class="js"><code>const greet = new Greeting({
   target: document.body,
   props: {
@@ -116,7 +117,301 @@ h1 {
   },
 });
 
-greet.set({ name: &#39;Jimmy&#39; });</code></pre>
+// Plain prop accessors
+greet.name = &#39;Bobby&#39;;
+
+// Set multiple props
+greet.$set({ name: &#39;Jimmy&#39; });</code></pre>
+</section>
+<section id="how-you-do-you-build-with-components" class="level1">
+<h1>How you do you build with components?</h1>
+<pre class="html"><code>&lt;!-- App.html --&gt;
+&lt;div&gt;
+  &lt;Greeting name={name}&gt;&lt;/Greeting&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  import Greeting from &#39;./Greeting.html&#39;;
+
+  let name = &#39;Randall&#39;;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="html-syntax" class="level1">
+<h1>HTML Syntax</h1>
+</section>
+<section id="interpolated-tags" class="level1">
+<h1>Interpolated Tags</h1>
+<pre class="html"><code>&lt;div&gt;{name}&lt;/div&gt;
+
+&lt;div&gt;{Math.floor(counter / 2)}&lt;/div&gt;
+
+&lt;div style=&quot;color: {color}&quot;&gt;Foo&lt;/div&gt;
+
+&lt;div hidden={isHidden}&gt;Bar&lt;/div&gt;
+
+&lt;div {hidden}&gt;Maybe I&#39;m hidden&lt;/div&gt;</code></pre>
+</section>
+<section id="logic" class="level1">
+<h1>Logic</h1>
+<pre class="html"><code>&lt;div&gt;
+  {#if counter &gt; 0}
+    More than zero
+  {:elseif counter &lt; 0}
+    Less than zero
+  {:else}
+    Zero
+  {/if}
+&lt;/div&gt;</code></pre>
+</section>
+<section id="loops" class="level1">
+<h1>Loops</h1>
+<pre class="html"><code>&lt;ul&gt;
+  &lt;!-- Destructure loop variables --&gt;
+  {#each developers as {name, location}, i}
+    &lt;li&gt;{i} - {name}, {location}&lt;/li&gt;
+  {:else}
+    &lt;li&gt;No developers!&lt;/li&gt;
+  {/each}
+&lt;/ul&gt;</code></pre>
+</section>
+<section id="async" class="level1">
+<h1>Async</h1>
+<pre class="html"><code>&lt;script&gt;
+  let promise = fetch(&#39;https://reqres.in/api/users&#39;)
+    .then(res =&gt; res.json())
+    .then(res =&gt; res.data);
+&lt;/script&gt;
+
+&lt;div&gt;
+  {#await promise}
+    Fetching...
+  {:then users}
+    {#each users as {name}} {name} {/each}
+  {:catch error}
+    &lt;p&gt;Couldn&#39;t fetch users: {error}&lt;/p&gt;
+  {/await}
+&lt;/div&gt;</code></pre>
+</section>
+<section id="directives" class="level1">
+<h1>Directives</h1>
+<p><code>x:y</code> - Event handlers, bindings, transitions</p>
+<pre class="html"><code>&lt;button on:click=&quot;{() =&gt; counter += 1}&quot;&gt;+1&lt;/button&gt;
+
+&lt;!-- Two-way binding --&gt;
+&lt;input bind:value={name}&gt;
+
+&lt;!-- Attribute binding --&gt;
+&lt;span class:active={isActive}&gt;Am I active?&lt;/span&gt;
+
+&lt;!-- Bring element into js --&gt;
+&lt;canvas bind:this={canvas}&gt;&lt;/canvas&gt;</code></pre>
+</section>
+<section id="special-elements" class="level1">
+<h1>Special elements</h1>
+<ul>
+<li><code>&lt;svelte:self&gt;</code> recursion</li>
+<li><code>&lt;svelte:component&gt;</code> dynamic components</li>
+<li><code>&lt;svelte:window&gt;</code> window event listeners</li>
+<li><code>&lt;svelte:body&gt;</code> similar</li>
+<li><code>&lt;svelte:head&gt;</code> title element, etc</li>
+</ul>
+</section>
+<section id="transclusion-with-slot" class="level1">
+<h1>Transclusion with <code>&lt;slot&gt;</code></h1>
+<pre class="html"><code>&lt;!-- Box.html --&gt;
+&lt;div&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+
+  &lt;small&gt;&lt;slot name=&quot;comment&quot;&gt;&lt;/slot&gt;&lt;/small&gt;
+&lt;/div&gt;</code></pre>
+<pre class="html"><code>&lt;Box&gt;
+  Box content here
+
+  &lt;span slot=&quot;comment&quot;&gt;Comment here&lt;/span&gt;
+&lt;/Box&gt;
+
+&lt;script&gt;
+  import Box from &#39;./Box.html&#39;;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="styles" class="level1">
+<h1>Styles</h1>
+</section>
+<section id="scoped-css" class="level1">
+<h1>Scoped CSS</h1>
+<p>Styles are scoped by default</p>
+<pre class="html"><code>&lt;style&gt;
+  .red {
+    color: red
+  }
+&lt;/style&gt;</code></pre>
+<p>becomes</p>
+<pre class="css"><code>.red.svelte-1xi0wsh {
+  color:red
+}</code></pre>
+</section>
+<section id="global" class="level1">
+<h1>:global()</h1>
+<p>Modifier makes classes global</p>
+<pre class="html"><code>&lt;style&gt;
+  .user :global(p) {
+    font-size: 2rem;
+  }
+&lt;/style&gt;</code></pre>
+</section>
+<section id="unused-styles" class="level1">
+<h1>Unused styles</h1>
+<p>Removed automatically! <img src="assets/markdeck/emojis/2728.png" alt="✨" class="emoji" /></p>
+</section>
+<section id="state-managemenet" class="level1">
+<h1>State managemenet</h1>
+</section>
+<section id="internal-state" class="level1">
+<h1>Internal state</h1>
+<pre class="html"><code>&lt;script&gt;
+  // count is available internal
+    let count = 0;
+&lt;/script&gt;
+
+&lt;div&gt;{count}&lt;/div&gt;</code></pre>
+</section>
+<section id="external-props" class="level1">
+<h1>External props</h1>
+<pre class="html"><code>&lt;!-- Counter.html --&gt;
+&lt;div&gt;{count}&lt;/div&gt;
+
+&lt;script&gt;
+  export let count = 0;
+&lt;/script&gt;</code></pre>
+<pre class="html"><code>&lt;!-- App.html --&gt;
+&lt;Counter count={count}&gt;&lt;/Counter&gt;
+
+&lt;script&gt;
+  import Counter from &#39;./Counter.html&#39;;
+
+  let count = 20;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="lifecycle-hooks" class="level1">
+<h1>Lifecycle hooks</h1>
+<pre class="html"><code>&lt;script&gt;
+    import { onMount, beforeUpdate, afterUpdate, onDestroy } from &#39;svelte&#39;;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="event-modifiers" class="level1">
+<h1>Event modifiers</h1>
+<pre class="html"><code>&lt;div on:click|stopPropagation|preventDefault=&quot;{() =&gt; foo = !foo}&quot;&gt;...&lt;/div&gt;</code></pre>
+</section>
+<section id="component-events" class="level1">
+<h1>Component events</h1>
+<ul>
+<li>Callbacks</li>
+<li>Event dispatching</li>
+</ul>
+</section>
+<section id="binding-callbacks" class="level1">
+<h1>Binding callbacks</h1>
+<p>Callbacks are simply exposed function props</p>
+<pre class="html"><code>&lt;div&gt;
+  &lt;!-- `changed` is an exposed prop --&gt;
+    &lt;Select changed=&quot;{val =&gt; changedVal = val}&quot;&gt;&lt;/Select&gt;
+    &lt;br/&gt;
+    Changed to: {changedVal || &#39;&#39;}
+&lt;/div&gt;
+
+&lt;script&gt;
+    import Select from &#39;./Select.html&#39;;
+    
+    let changedVal;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="triggering-callbacks" class="level1">
+<h1>Triggering callbacks</h1>
+<pre class="html"><code>&lt;!-- call `changed` prop --&gt;
+&lt;select on:change=&quot;{e =&gt; changed(e.target.value)}&quot;&gt;
+    &lt;option&gt;1&lt;/option&gt;
+    &lt;option&gt;2&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+  // Expose changed prop
+  export let changed;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="event-dispatching" class="level1">
+<h1>Event dispatching</h1>
+<pre class="html"><code>&lt;!-- Component.html --&gt;
+&lt;script&gt;
+  import { createEventDispatch } from &#39;svelte&#39;;
+
+  const dispatch = createEventDispatcher();
+
+  setInternval(() =&gt; {
+    dispatch(&#39;tick&#39;, { date: new Date() });
+  }, 1000);
+&lt;/script&gt;</code></pre>
+<pre class="html"><code>&lt;div&gt;
+  {newTickdate}
+  &lt;!-- e is a CustomEvent instance --&gt;
+  &lt;Component on:tick=&quot;{e =&gt; newTickdate = e.detail.date}&quot;&gt;&lt;/Component&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  let newTickDate;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="reactivity" class="level1">
+<h1>Reactivity</h1>
+<ul>
+<li>Stores</li>
+<li>Reactive declarations</li>
+</ul>
+</section>
+<section id="stores" class="level1">
+<h1>Stores</h1>
+<pre class="js"><code>// stores.js
+import { writable } from &#39;svelte/store&#39;;
+
+export const user = writable({ });</code></pre>
+<pre class="html"><code>&lt;!-- $ prefix for stores --&gt;
+&lt;div&gt;&lt;b&gt;User:&lt;/b&gt; {$user.name}&lt;/div&gt;
+
+&lt;script&gt;
+  import { onMount } from &#39;svelte&#39;;
+  import { user } from &#39;./stores&#39;;
+
+  onMount(async () =&gt; {
+    const data = await (await fetch(&#39;/api/users&#39;)).json();
+    user.$set(data);
+  });
+&lt;/script&gt;</code></pre>
+</section>
+<section id="reactive-declarations" class="level1">
+<h1>Reactive declarations</h1>
+<p><code>$:</code> the destiny operator</p>
+<p><small>
+Replaces <code>computed</code> values. Tells compiler to run statement any time value on
+eight-side changes.
+</small></p>
+<pre class="html"><code>&lt;p&gt;Counter: {counter}&lt;/p&gt;
+&lt;p&gt;Double: {dobule}&lt;/p&gt;
+&lt;button on:click=&quot;{counter += 1 }&quot;&gt;+1&lt;/button&gt;
+
+&lt;script&gt;
+  let counter = 1;
+  $: double = counter * 2;
+&lt;/script&gt;</code></pre>
+</section>
+<section id="other-things" class="level1">
+<h1>Other things</h1>
+<ul>
+<li>Transitions</li>
+<li>Sapper</li>
+</ul>
+</section>
+<section id="example" class="level1">
+<h1>Example!</h1>
+<p><a href="https://v3.svelte.technology/repl?version=3.0.0-alpha17&amp;gist=d0898a7fc6b470405630d6a134f632e7">REPL</a></p>
 </section>
 
         </div>

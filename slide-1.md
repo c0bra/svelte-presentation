@@ -5,7 +5,9 @@ slideNumber: true
 controls: true
 ---
 
-# ![](assets/svelte-logo.png)
+# 
+
+<img src="assets/svelte.svg" alt="logo" width="200"/> (v3)
 
 A magically disappearing framework
 
@@ -72,18 +74,18 @@ Components are done in a single file, like Vue or React.
 <h1>Hi, {name}, I'm your component!</h1>
 
 <script>
-export let name = 'Bob';
+  export let name = 'Bob';
 </script>
 
 <style>
-h1 {
-  color: blue;
-}
+  h1 {
+    color: blue;
+  }
 </style>
 ```
 
 
-# How do you use a Svelte component>?
+# How do you use Svelte components?
 
 
 ```js
@@ -94,6 +96,25 @@ const greet = new Greeting({
   },
 });
 
-greet.set({ name: 'Jimmy' });
+// Plain prop accessors
+greet.name = 'Bobby';
+
+// Set multiple props
+greet.$set({ name: 'Jimmy' });
 ```
 
+
+# How you do you build with components?
+
+```html
+<!-- App.html -->
+<div>
+  <Greeting name={name}></Greeting>
+</div>
+
+<script>
+  import Greeting from './Greeting.html';
+
+  let name = 'Randall';
+</script>
+```

@@ -12,11 +12,21 @@
     * transitions
   * Event handling: `on:*`
     * `on:click=""`
+  * Special elements
+    * self (recursive)
+    * component (dynamic components)
+    * window, body, head
 * CSS
   * Styles are scoped by default
   * `:global()` to unscope
   * Unused styles are removed automatically
-* Special elements
-  * self (recursive)
-  * component (dynamic components)
-  * window, body, head
+* Component state
+  * Internal
+  * External
+  * Lifecycle hooks
+  * Callbacks
+  * Event dispatching
+* State management
+  * Store
+* Sapper
+  * Static sites
