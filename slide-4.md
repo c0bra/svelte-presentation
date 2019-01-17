@@ -40,7 +40,7 @@ export const user = writable({ });
 
 ```html
 <p>Counter: {counter}</p>
-<p>Double: {dobule}</p>
+<p>Double: {double}</p>
 <button on:click="{counter += 1 }">+1</button>
 
 <script>

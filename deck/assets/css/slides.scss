@@ -19,6 +19,17 @@
   src: url("fonts/xkcd-script.ttf") format('truetype');
 }
 
+.dark-on-light * {
+    color: #333 !important;
+}
+
+.ascii text {
+    fill: #fff;
+}   
+.ascii #boxes text {
+    fill: #000;
+}
+
 .reveal,
 .reveal h1,
 .reveal h2,

@@ -1,17 +1,23 @@
 # HTML Syntax
 
+(Spoiler: It's [HTMLX](https://github.com/htmlx-org/HTMLx))
+
+
 # Interpolated Tags
 
 ```html
 <div>{name}</div>
-
 <div>{Math.floor(counter / 2)}</div>
-
 <div style="color: {color}">Foo</div>
-
 <div hidden={isHidden}>Bar</div>
-
 <div {hidden}>Maybe I'm hidden</div>
+
+<!-- Transitions -->
+<p in:fly="{y: 50}" out:fade>flies up, fades out</p>
+
+<script>
+  import { fade, fly } from 'svelte-transitions';
+</script>
 ```
 
 
@@ -92,7 +98,7 @@
 * `<svelte:head>` title element, etc
 
 
-# Transclusion with `<slot>`
+# Dynamic content with `<slot>`
 
 ```html
 <!-- Box.html -->

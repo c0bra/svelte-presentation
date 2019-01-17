@@ -26,7 +26,7 @@
 
 ```html
 <!-- App.html -->
-<Counter count={count}></Counter>
+<Counter {count}></Counter>
 
 <script>
   import Counter from './Counter.html';
@@ -40,7 +40,13 @@
 
 ```html
 <script>
-	import { onMount, beforeUpdate, afterUpdate, onDestroy } from 'svelte';
+  import { onMount, beforeUpdate, afterUpdate, onDestroy } from 'svelte';
+
+  let data;
+
+  onMount(async () => {
+    data = await (await fetch('/api/data')).json();
+  });
 </script>
 ```
 
@@ -100,11 +106,11 @@ Callbacks are simply exposed function props
 ```html
 <!-- Component.html -->
 <script>
-  import { createEventDispatch } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
 
-  setInternval(() => {
+  setInterval(() => {
     dispatch('tick', { date: new Date() });
   }, 1000);
 </script>

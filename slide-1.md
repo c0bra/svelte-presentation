@@ -24,16 +24,77 @@ A magically disappearing framework
 <small>Turns into Vanilla JS in the browser</small>
 
 
-# Runtimes live in your browser
+# The old days
 
-* Angular, React, Vue
-* Interpret your code at runtime
+```js
+document.querySelector('input').addEventListener('input', function(event) {
+  span.textContent = `Hello ${this.value}`;
+});
+```
+
+<small>Directly attaching to DOM events. Gets messy fast.</small>
+
+
+# Now
+
+```html
+<span>Hello, {{ name }}</span>
+<input @input="name = $event.target.value">
+```
+
+<small>We write state-driven code, and it's the framework's job to tell the browser what to do.</small>
+
+
+# DX vs UX {.ascii}
+
+```render_a2s
+                                #-----------------------------------#
+#---------------------#         |[0]                                |
+|[0]                  |         |   1. on state change              |
+|                     |         |   2. re-render app                |
+|  1. On event        |         |   3. reconcile new VDOM with the  |
+|  2. Do this thing   |         |      current view, to figure out  |
+|                     |         |      what we need to do           |
+|                     |         |   4. do the things                |
+#---------------------#         |                                   |
+                                |                                   |
+  Better for users              #-----------------------------------#
+
+                                  Better for developers
+
+[0]: {"fill": "lightyellow", "a2s:delref": true, "fillStyle": "solid"}
+```
+
+
+# Frameworks help us organize mentally
+
+* Lets us think about our code as a series of interconnected states
+* Abstracts away fiddly DOM management bits
+* But that creates extra work (VDOM diffing, change detection) we didn't have to do originally
+
+
+# Most frameworks have runtimes
+
+* Runtimes that live in your browser
+* When you ship your app you ship runtime too
+* Examples: Angular, React, Vue
+* Interpret your app code when browser loads
+
+
+# What if you could have it both ways?
+
+* State management
+* Direct DOM manipulation
+
+
+# Enter compilers!
 
 
 # Compilers live in your dev env
 
 * Turn your apps and components into plain JS
-* Work as part of your build flow (webpack, rollup, parcel)
+* Works as part of your build flow (webpack, rollup, parcel)
+* Bundle overhead is just what's needed to modify DOM
 
 
 # Why compile?
@@ -43,6 +104,7 @@ A magically disappearing framework
 
 > Svelte's Todo MVC weighs 3.6kb zipped. For comparison, React plus ReactDOM without any app code weighs about 45kb zipped
 
+<small>Though they are getting smaller with Angular Ivy, React Prepack, etc.</small>
 
 # Runtimes provide unnecessary code
 
@@ -62,7 +124,40 @@ No runtime means code can be re-used in any framework, or no framework.
 |
 |
 
-Re-using Vue in React or vice-versa requires jumping through hoops. Don't even think about Angular.
+Re-using Vue in React or vice-versa requires jumping through hoops. Don't even think about Angular (but maybe it's
+easier with Ivy)
+
+
+# How does Svelte work? {bg=white .dark-on-light}
+
+```render_a2s
+    #-------------#
+    |             |
+    | HTML Parser |------------+                            #---------------#
+    |             |            |                            |   Blocks      |
+    #-------------#            |                            |               |
+                               |                            |  #----------# |
+                               |                            |  | Main     | |
+                               |      #----------------#    |  | Fragment | |
+                               |      |                |    |  #----------# |
+    #------------#             |      | Component AST  |--->|               |
+    | Acorn (js) |-------------+----->|                |    |    #------#   |
+    |            |             |      #----------------#    |    |      |   |
+    #------------#             |                            |    #------#   |
+                               |                            |               |
+    #----------#               |                            |    #------#   |
+    |          |               |                            |    |      |   |
+    | css-tree |---------------+                            |    #------#   |
+    |          |                                            #---------------#
+    #----------#
+```
+
+<small>
+Each block has methods for creating, updating, and destroying the DOM.
+No need for Virtual DOM.
+
+Svelte works with the DOM directly.
+</small>
 
 
 # How do you write Svelte?

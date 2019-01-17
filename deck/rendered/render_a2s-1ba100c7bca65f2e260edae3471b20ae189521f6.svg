@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="703" height="304" version="1.1">
+    <defs>
+        <filter id="dsFilterNoBlur" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feBlend in="SourceGraphic" in2="matrixOut" mode="normal"/>
+        </filter>
+        <filter id="dsFilter" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+        </filter>
+        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M10 0v10L0 5z"/>
+        </marker>
+        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M0 0l10 5-10 5z"/>
+        </marker>
+    </defs>
+    <g id="boxes" fill="none" stroke="#000" stroke-width="2">
+        <g id="group0">
+            <path id="path0" fill="#fff" d="M40.5 8h126v64h-126z" filter="url(#dsFilter)"/>
+            <text id="text0" x="53.1" y="44.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                HTML Parser
+            </text>
+        </g>
+        <g id="group3">
+            <path id="path3" fill="#fff" d="M544.5 40h144v240h-144z" filter="url(#dsFilter)"/>
+            <text id="text1" x="575.1" y="60.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                Blocks
+            </text>
+        </g>
+        <g id="group7">
+            <path id="path7" fill="#fff" d="M571.5 88h99v48h-99z" filter="url(#dsFilter)"/>
+            <text id="text2" x="584.1" y="108.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                Main
+            </text>
+            <text id="text3" x="584.1" y="124.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                Fragment
+            </text>
+        </g>
+        <g id="group9">
+            <path id="path9" fill="#fff" d="M346.5 120h153v64h-153z" filter="url(#dsFilter)"/>
+            <text id="text4" x="359.1" y="156.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                Component AST
+            </text>
+        </g>
+        <g id="group13">
+            <path id="path13" fill="#fff" d="M40.5 152h117v48h-117z" filter="url(#dsFilter)"/>
+            <text id="text5" x="53.1" y="172.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                Acorn (js)
+            </text>
+        </g>
+        <g id="group16">
+            <path id="path16" fill="#fff" d="M589.5 168h63v32h-63z" filter="url(#dsFilter)"/>
+        </g>
+        <g id="group24">
+            <path id="path24" fill="#fff" d="M40.5 232h99v64h-99z" filter="url(#dsFilter)"/>
+            <text id="text6" x="53.1" y="268.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                css-tree
+            </text>
+        </g>
+        <g id="group26">
+            <path id="path26" fill="#fff" d="M589.5 232h63v32h-63z" filter="url(#dsFilter)"/>
+        </g>
+    </g>
+    <g id="lines" fill="none" stroke="#000" stroke-width="2">
+        <g id="group355">
+            <path id="path355" d="M148.5 264h135V40h-108"/>
+        </g>
+        <g id="group387">
+            <path id="path387" marker-end="url(#Pointer)" d="M166.5 168h171"/>
+        </g>
+        <g id="group1108">
+            <path id="path1108" marker-end="url(#Pointer)" d="M508.5 152h27"/>
+        </g>
+    </g>
+</svg>
